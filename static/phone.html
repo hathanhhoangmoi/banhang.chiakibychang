@@ -20,7 +20,6 @@ body{
   padding:20px;
 }
 
-/* layout 2 card */
 .wrap{
   width:100%;
   max-width:980px;
@@ -43,6 +42,9 @@ body{
   padding:24px 24px 26px;
   animation:fadeUp .4s ease;
 }
+.card-full{
+  grid-column: 1 / -1;
+}
 @keyframes fadeUp{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:translateY(0)}}
 
 .logo{
@@ -54,9 +56,14 @@ body{
 }
 .logo.phone{background:linear-gradient(135deg,#f9a8d4,#ec4899);}
 .logo.cancel{background:linear-gradient(135deg,#fecaca,#f97373);}
+.logo.transfer{background:linear-gradient(135deg,#c8b4fa,#a78bfa); animation:pulseV 2s infinite;}
 @keyframes pulse{
   0%,100%{box-shadow:0 4px 16px rgba(236,72,153,.35)}
   50%{box-shadow:0 4px 28px rgba(236,72,153,.6),0 0 0 6px rgba(236,72,153,.12)}
+}
+@keyframes pulseV{
+  0%,100%{box-shadow:0 4px 16px rgba(167,139,250,.35)}
+  50%{box-shadow:0 4px 28px rgba(167,139,250,.6),0 0 0 6px rgba(167,139,250,.12)}
 }
 
 .title{font-size:18px;font-weight:700;color:#3b3551;text-align:center;margin-bottom:4px}
@@ -72,7 +79,6 @@ body{
 .notice-title{
   font-weight:850;letter-spacing:.4px;margin-bottom:4px;font-size:11px;
 }
-
 .notice-phone{
   background:rgba(255,200,100,.18);
   border:1px solid rgba(255,180,60,.35);
@@ -116,6 +122,12 @@ body{
   color:#7f1d1d;box-shadow:0 4px 16px rgba(248,113,113,.45);
 }
 .btn-red:hover{transform:translateY(-1px);box-shadow:0 8px 24px rgba(248,113,113,.6)}
+.btn-red:disabled{background:rgba(200,190,220,.4);color:rgba(100,80,140,.4);box-shadow:none;cursor:not-allowed;transform:none}
+.btn-purple{
+  background:linear-gradient(135deg,#c8b4fa,#a78bfa);
+  color:#fff;box-shadow:0 4px 16px rgba(167,139,250,.4);
+}
+.btn-purple:hover{transform:translateY(-1px);box-shadow:0 8px 24px rgba(167,139,250,.5)}
 
 .error{
   font-size:12px;color:#dc2626;margin-top:12px;
@@ -174,13 +186,100 @@ body{
 }
 .remaining-badge.warn{background:rgba(253,230,138,.3);color:#92400e;border-color:rgba(252,211,77,.4)}
 .remaining-badge.empty{background:rgba(254,202,202,.3);color:#991b1b;border-color:rgba(252,165,165,.4)}
+
+/* Transfer card columns */
+.transfer-grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:16px;
+  align-items:start;
+}
+@media(max-width:600px){
+  .transfer-grid{grid-template-columns:1fr;}
+}
+.transfer-col{
+  border-radius:14px;
+  padding:16px;
+}
+.transfer-col-left{
+  background:rgba(216,180,254,.12);
+  border:1.5px solid rgba(198,181,255,.45);
+}
+.transfer-col-right{
+  background:rgba(167,243,208,.12);
+  border:1.5px solid rgba(110,231,183,.35);
+}
+.transfer-col-title{
+  font-size:10px;font-weight:700;letter-spacing:.6px;
+  text-transform:uppercase;margin-bottom:14px;
+  display:flex;align-items:center;gap:6px;
+}
+.transfer-inp{
+  width:100%;box-sizing:border-box;
+  margin:6px 0 12px;padding:10px 13px;
+  border:1.5px solid rgba(198,181,255,.5);
+  border-radius:10px;font-size:13px;
+  font-family:monospace;letter-spacing:.8px;
+  background:rgba(255,255,255,.65);color:#3b3551;
+  outline:none;transition:border .2s,box-shadow .2s;
+}
+.transfer-inp:focus{border-color:#a78bfa;box-shadow:0 0 0 3px rgba(167,139,250,.15)}
+.transfer-inp-green{border-color:rgba(110,231,183,.4);letter-spacing:normal;font-family:'Inter',sans-serif;font-size:12px;}
+.transfer-inp-green:focus{border-color:#10b981;box-shadow:0 0 0 3px rgba(16,185,129,.12)}
+.transfer-label{
+  font-size:11px;font-weight:700;color:#9b8bb4;
+  letter-spacing:.4px;text-transform:uppercase;display:block;
+}
+.transfer-note{
+  background:rgba(167,243,208,.2);
+  border:1px solid rgba(110,231,183,.35);
+  border-radius:10px;padding:12px 14px;
+  margin-top:8px;font-size:11px;
+  color:#065f46;line-height:1.7;
+}
+
+/* Modals */
+.modal-bg{
+  display:none;position:fixed;inset:0;
+  background:rgba(60,40,90,.45);
+  backdrop-filter:blur(10px);
+  z-index:9999;
+  align-items:center;justify-content:center;
+  padding:16px;
+}
+.modal-bg.show{display:flex;}
+.modal-box{
+  background:rgba(255,255,255,.88);
+  backdrop-filter:blur(30px);
+  border:1px solid rgba(255,255,255,.9);
+  border-radius:22px;
+  padding:30px 28px;
+  width:100%;
+  box-shadow:0 24px 60px rgba(160,130,200,.3);
+  text-align:center;
+}
+.modal-btn-row{display:flex;gap:10px;margin-top:4px;}
+.btn-modal-cancel{
+  flex:1;padding:12px;
+  border:1.5px solid rgba(198,181,255,.4);
+  border-radius:12px;background:rgba(255,255,255,.5);color:#7c6fa0;
+  font-family:inherit;font-size:13px;font-weight:600;cursor:pointer;transition:all .2s;
+}
+.btn-modal-cancel:hover{background:rgba(255,255,255,.8)}
+.btn-modal-confirm{
+  flex:2;padding:12px;border:none;border-radius:12px;
+  background:linear-gradient(135deg,#f59e0b,#d97706);color:#fff;
+  font-family:inherit;font-size:13px;font-weight:700;cursor:pointer;
+  box-shadow:0 4px 14px rgba(245,158,11,.35);transition:all .2s;
+}
+.btn-modal-confirm:hover{transform:translateY(-1px)}
 </style>
 </head>
 <body>
 
 <div class="wrap">
 
-  <!-- CARD 1: TRA CỨU SĐT -->
+  <!-- ── CARD 1: TRA CỨU SĐT ── -->
   <div class="card">
     <div class="logo phone">📞</div>
     <div class="title">Tra cứu SĐT khách hàng</div>
@@ -189,9 +288,9 @@ body{
     <div class="notice notice-phone">
       <div class="notice-title">⚠️ THÔNG BÁO MIỄN TRỪ TRÁCH NHIỆM</div>
       Công cụ này được xây dựng và cung cấp dựa trên các nguồn dữ liệu và mã nguồn mở công khai từ Chiaki.vn.<br/><br/>
-      Chúng tôi không sở hữu cũng như không chịu trách nhiệm về nội dung gốc của các nguồn dữ liệu đó.<br/><br/>
-      Người sử dụng có trách nhiệm đảm bảo việc khai thác và sử dụng dữ liệu tuân thủ đầy đủ các quy định của pháp luật hiện hành. Nghiêm cấm mọi hành vi sử dụng dữ liệu cho các mục đích gian lận, trái phép hoặc vi phạm quyền riêng tư.<br/><br/>
-      Mọi hoạt động đều có thể được theo dõi và lưu trữ lại. Trong trường hợp phát hiện vi phạm, chúng tôi có quyền cung cấp toàn bộ thông tin cho cơ quan chức năng có thẩm quyền.<br/><br/>
+      Chúng tôi không sở hữu cũng như không chịu trách nhiệm về nội dung gốc.<br/><br/>
+      Nghiêm cấm mọi hành vi sử dụng dữ liệu cho các mục đích gian lận, trái phép hoặc vi phạm quyền riêng tư.<br/><br/>
+      Mọi hoạt động đều có thể được ghi nhận và lưu lại. Trong trường hợp phát hiện vi phạm, chúng tôi có quyền cung cấp thông tin cho cơ quan chức năng.<br/><br/>
       <span style="font-weight:700">Bằng việc nhập KEY ID và tiếp tục sử dụng, bạn xác nhận đã đọc, hiểu và đồng ý với các điều khoản nêu trên.</span>
     </div>
 
@@ -240,7 +339,7 @@ body{
     </div>
   </div>
 
-  <!-- CARD 2: HỦY ĐƠN HÀNG -->
+  <!-- ── CARD 2: HUỶ ĐƠN HÀNG ── -->
   <div class="card">
     <div class="logo cancel">❌</div>
     <div class="title">Hủy đơn hàng</div>
@@ -265,20 +364,112 @@ body{
     <div class="field">
       <label class="label">CANCEL KEY</label>
       <input class="inp inp-mono" id="cancelKey" type="text"
-             placeholder="CANCEL-XXXXX-XXXXXX-XXXXX"
+             placeholder="CANCEL-KEY-XXXXXXXX"
              onkeydown="if(event.key==='Enter')doCancel()"/>
     </div>
 
-    <button class="btn btn-red" onclick="doCancel()">
+    <button class="btn btn-red" id="btnCancel" onclick="doCancel()">
       🚫&nbsp; Gửi yêu cầu hủy đơn
     </button>
 
-    <div id="cancelMsg" class="result" style="border-top:none;padding-top:0;"></div>
+    <div id="cancelMsg" style="margin-top:14px;"></div>
   </div>
 
+  <!-- ── CARD 3: CHUYỂN ĐỔI ĐƠN HÀNG (full width) ── -->
+  <div class="card card-full">
+    <div class="logo transfer" style="animation-name:pulseV;">🔄</div>
+    <div class="title">Chuyển đổi đơn hàng</div>
+    <div class="sub">Chuyển đơn sang gian hàng mới và tự động huỷ đơn cũ</div>
+
+    <div class="transfer-grid">
+
+      <!-- CỘT TRÁI -->
+      <div class="transfer-col transfer-col-left">
+        <div class="transfer-col-title" style="color:#7c6fa0;">
+          <span style="font-size:16px;">📤</span> Gian hàng phát sinh đơn hàng
+        </div>
+
+        <label class="transfer-label">Mã đơn hàng đã có</label>
+        <input class="transfer-inp" id="transferOrderCode" type="text" placeholder="VD: R8547883114"/>
+
+        <label class="transfer-label">Mã sản phẩm của đơn hàng</label>
+        <input class="transfer-inp" id="transferProductCode" type="text" placeholder="VD: SP001234"/>
+
+        <label class="transfer-label">Key chuyển đơn hàng</label>
+        <input class="transfer-inp" id="transferKey" type="text"
+               placeholder="TRANSFER-KEY-XXXXXXXX"
+               style="margin-bottom:18px;"/>
+
+        <button class="btn btn-purple" onclick="openTransferConfirm()">
+          🔄&nbsp; Chuyển đơn hàng
+        </button>
+      </div>
+
+      <!-- CỘT PHẢI -->
+      <div class="transfer-col transfer-col-right">
+        <div class="transfer-col-title" style="color:#059669;">
+          <span style="font-size:16px;">📥</span> Gian hàng nhận đơn hàng mới
+        </div>
+
+        <label class="transfer-label">Link gian hàng nhận đơn</label>
+        <input class="transfer-inp transfer-inp-green" id="transferShopUrl" type="text"
+               placeholder="VD: https://chiaki.vn/gian-hang-stXXXX"/>
+
+        <div class="transfer-note">
+          <div style="font-weight:700;margin-bottom:6px;color:#047857;">📌 Lưu ý khi chuyển đơn:</div>
+          <div>• Đơn cũ sẽ bị <b>huỷ tự động</b> sau khi chuyển</div>
+          <div>• Mã đơn mới sẽ được tạo tại gian hàng nhận</div>
+          <div>• Giá sản phẩm theo mã SP của gian hàng mới</div>
+          <div>• Thao tác <b>không thể hoàn tác</b> sau khi xác nhận</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+</div><!-- end .wrap -->
+
+
+<!-- ── MODAL XÁC NHẬN CHUYỂN ĐƠN ── -->
+<div class="modal-bg" id="transferConfirmBg">
+  <div class="modal-box" style="max-width:420px;">
+    <div style="font-size:44px;margin-bottom:10px;">⚠️</div>
+    <div style="font-size:16px;font-weight:700;color:#3b3551;margin-bottom:6px;">Xác nhận chuyển đơn hàng</div>
+    <div style="font-size:12px;color:#9b8bb4;margin-bottom:20px;">Vui lòng đọc kỹ trước khi xác nhận</div>
+
+    <div style="background:rgba(254,243,199,.6);border:1.5px solid rgba(252,211,77,.5);
+                border-radius:14px;padding:16px 18px;margin-bottom:22px;
+                text-align:left;font-size:12px;color:#78350f;line-height:1.9;">
+      <div style="font-weight:800;color:#92400e;margin-bottom:8px;">📋 THÔNG TIN QUAN TRỌNG</div>
+      <div>🔢 Đơn hàng sẽ có <b>mã đơn mới</b> tại gian hàng mới</div>
+      <div>🚫 Đơn cũ sẽ bị <b>huỷ</b> với lý do: <i>Khách hàng yêu cầu huỷ đơn</i></div>
+      <div>💰 Giá sản phẩm sẽ <b>thay đổi</b> theo mã SP mới của gian hàng nhận đơn</div>
+      <div style="margin-top:8px;font-weight:700;color:#b45309;">✅ Xác nhận đã điền đúng thông tin</div>
+    </div>
+
+    <div class="modal-btn-row">
+      <button class="btn-modal-cancel" onclick="closeTransferConfirm()">Huỷ bỏ</button>
+      <button class="btn-modal-confirm" onclick="submitTransferOrder()">✅ Xác nhận chuyển</button>
+    </div>
+  </div>
 </div>
 
+<!-- ── MODAL ĐANG PHÁT TRIỂN ── -->
+<div class="modal-bg" id="transferDevBg">
+  <div class="modal-box" style="max-width:380px;">
+    <div style="font-size:48px;margin-bottom:12px;">🚧</div>
+    <div style="font-size:16px;font-weight:700;color:#3b3551;margin-bottom:8px;">Tính năng đang phát triển</div>
+    <div style="font-size:13px;color:#9b8bb4;line-height:1.7;margin-bottom:22px;">
+      Tính năng <b>chuyển đơn hàng</b> hiện đang được phát triển.<br/>
+      Vui lòng đợi trong thời gian tới! 🙏
+    </div>
+    <button class="btn btn-purple" onclick="closeTransferDev()">Đã hiểu</button>
+  </div>
+</div>
+
+
 <script>
+/* ── KEY CHECK (tra cứu SĐT) ── */
 let keyTimer;
 document.getElementById('inpKey').addEventListener('input', () => {
   clearTimeout(keyTimer);
@@ -300,18 +491,19 @@ document.getElementById('inpKey').addEventListener('input', () => {
         const r = d.remaining;
         statusEl.textContent = d.unlimited ? 'Key không giới hạn ✓'
           : `Key hợp lệ — còn ${r}/${d.limit} lượt`;
-        statusEl.style.color = r > 0 || d.unlimited ? '#059669' : '#dc2626';
+        statusEl.style.color = (r > 0 || d.unlimited) ? '#059669' : '#dc2626';
       }
     } catch { statusEl.textContent = ''; }
   }, 600);
 });
 
+/* ── TRA CỨU SĐT ── */
 async function doSearch() {
-  const code   = document.getElementById('inpCode').value.trim();
-  const key    = document.getElementById('inpKey').value.trim();
-  const errEl  = document.getElementById('errBox');
-  const resEl  = document.getElementById('resultBox');
-  const btn    = document.getElementById('btnSearch');
+  const code  = document.getElementById('inpCode').value.trim();
+  const key   = document.getElementById('inpKey').value.trim();
+  const errEl = document.getElementById('errBox');
+  const resEl = document.getElementById('resultBox');
+  const btn   = document.getElementById('btnSearch');
 
   errEl.classList.remove('show');
   resEl.classList.remove('show');
@@ -332,16 +524,16 @@ async function doSearch() {
     const data = await res.json();
     if (data.error) { showErr(data.error); return; }
 
-    document.getElementById('resPhone').textContent   = data.phone       || 'Không có';
-    document.getElementById('resCode').textContent    = data.order_code   || code;
-    document.getElementById('resShop').textContent    = data.shop_name    || '—';
-    document.getElementById('resDate').textContent    = data.order_date   || '—';
+    document.getElementById('resPhone').textContent   = data.phone            || 'Không có';
+    document.getElementById('resCode').textContent    = data.order_code        || code;
+    document.getElementById('resShop').textContent    = data.shop_name         || '—';
+    document.getElementById('resDate').textContent    = data.order_date        || '—';
     document.getElementById('resName').textContent    = data.customer_name || data.receivername || '—';
-    document.getElementById('resAddress').textContent = data.address     || '—';
-    document.getElementById('resProduct').textContent = data.product     || '—';
-    document.getElementById('resPayment').textContent = data.payment     || '—';
-    document.getElementById('resSource').textContent  = data.source         || '—';
-    document.getElementById('resPrepaid').textContent = data.prepaid_amount || '—';
+    document.getElementById('resAddress').textContent = data.address           || '—';
+    document.getElementById('resProduct').textContent = data.product           || '—';
+    document.getElementById('resPayment').textContent = data.payment           || '—';
+    document.getElementById('resSource').textContent  = data.source            || '—';
+    document.getElementById('resPrepaid').textContent = data.prepaid_amount    || '—';
 
     const wrap = document.getElementById('remainingWrap');
     if (data.remaining === -1) {
@@ -352,16 +544,14 @@ async function doSearch() {
       wrap.innerHTML = `<span class="remaining-badge empty">🔑 Hết lượt</span>`;
     }
 
-    const cpBtn = document.getElementById('btnCopyPhone');
-    cpBtn.textContent = 'Copy';
-    cpBtn.classList.remove('copied');
-
+    document.getElementById('btnCopyPhone').textContent = 'Copy';
+    document.getElementById('btnCopyPhone').classList.remove('copied');
     resEl.classList.add('show');
   } catch(e) {
     showErr('Lỗi kết nối: ' + e.message);
   } finally {
     btn.disabled = false;
-    btn.innerHTML = '🔍&nbsp; Tra cứu số điện thoại';
+    btn.innerHTML = '🔍&nbsp; Nhận thông tin đơn hàng';
   }
 }
 
@@ -381,318 +571,116 @@ function copyPhone() {
   };
   navigator.clipboard.writeText(phone).then(done).catch(() => {
     const el = document.createElement('textarea');
-    el.value = phone; document.body.appendChild(el);
-    el.select(); document.execCommand('copy');
-    document.body.removeChild(el); done();
+    el.value = phone;
+    document.body.appendChild(el);
+    el.select();
+    document.execCommand('copy');
+    document.body.removeChild(el);
+    done();
   });
 }
 
-window.addEventListener('DOMContentLoaded', () => {
-  const saved = localStorage.getItem('lastPhoneKey');
-  if (saved) document.getElementById('inpKey').value = saved;
-});
-
-function doCancel() {
+/* ── HUỶ ĐƠN ── */
+async function doCancel() {
   const code = document.getElementById('cancelCode').value.trim();
   const key  = document.getElementById('cancelKey').value.trim();
   const box  = document.getElementById('cancelMsg');
+  const btn  = document.getElementById('btnCancel');
+
+  box.innerHTML = '';
 
   if (!code || !key) {
-    box.classList.add('show');
-    box.style.borderTop = 'none';
     box.innerHTML = `
-      <div style="
-        font-size:12px;
-        padding:10px 12px;
-        border-radius:10px;
-        border:1px solid rgba(248,113,113,.3);
-        background:rgba(254,202,202,.4);
-        color:#991b1b;
-        line-height:1.5;
-      ">
+      <div style="font-size:12px;padding:10px 12px;border-radius:10px;
+                  border:1px solid rgba(248,113,113,.3);background:rgba(254,202,202,.4);
+                  color:#991b1b;line-height:1.5;">
         Vui lòng nhập đầy đủ <b>Mã đơn</b> và <b>CANCEL KEY</b>.
-      </div>
-    `;
+      </div>`;
     return;
   }
 
-  box.classList.add('show');
-  box.style.borderTop = 'none';
-  box.innerHTML = `
-    <div style="
-      font-size:12px;
-      padding:10px 12px;
-      border-radius:10px;
-      border:1px solid rgba(252,211,77,.6);
-      background:rgba(254,243,199,.8);
-      color:#92400e;
-      line-height:1.6;
-    ">
-      🚧 Chức năng <b>hủy đơn hàng</b> đang được hoàn thiện.<br/><br/>
-      Mã đơn: <b>${code}</b><br/>
-      Key: <span style="font-family:monospace">${key}</span><br/><br/>
-      Vui lòng đảm bảo đơn hàng <b>CHƯA TẠO MÃ VẬN ĐƠN</b> trước khi gửi yêu cầu hủy.<br/><br/>
-      Hiện tại, vui lòng liên hệ đội vận hành để được hỗ trợ theo phương thức
-      <b>“Khách hàng yêu cầu hủy đơn”</b>.
-    </div>
-  `;
+  btn.disabled = true;
+  btn.innerHTML = '⏳&nbsp; Đang xử lý...';
+
+  try {
+    const res = await fetch('/api/order/cancel', {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({order_code: code, cancel_key: key})
+    });
+    const data = await res.json();
+
+    if (data.ok) {
+      box.innerHTML = `
+        <div style="font-size:12px;padding:12px 14px;border-radius:10px;
+                    border:1px solid rgba(110,231,183,.4);background:rgba(167,243,208,.3);
+                    color:#065f46;line-height:1.7;">
+          <div style="font-weight:700;font-size:13px;margin-bottom:4px;">✅ ${data.message}</div>
+          <div style="color:#9b8bb4;">Lượt còn lại: <b>${data.remaining}</b>/10</div>
+        </div>`;
+    } else {
+      box.innerHTML = `
+        <div style="font-size:12px;padding:10px 12px;border-radius:10px;
+                    border:1px solid rgba(248,113,113,.3);background:rgba(254,202,202,.4);
+                    color:#991b1b;line-height:1.6;">
+          ❌ ${data.error || 'Có lỗi xảy ra. Vui lòng thử lại.'}
+        </div>`;
+    }
+  } catch(e) {
+    box.innerHTML = `
+      <div style="font-size:12px;padding:10px 12px;border-radius:10px;
+                  border:1px solid rgba(248,113,113,.3);background:rgba(254,202,202,.4);
+                  color:#991b1b;">
+        ❌ Lỗi kết nối: ${e.message}
+      </div>`;
+  } finally {
+    btn.disabled = false;
+    btn.innerHTML = '🚫&nbsp; Gửi yêu cầu hủy đơn';
+  }
 }
-<!-- ── BẢNG CHUYỂN ĐỔI ĐƠN HÀNG ── -->
-<div class="transfer-card" style="
-  background: rgba(255,255,255,0.55);
-  backdrop-filter: blur(24px);
-  border: 1px solid rgba(255,255,255,0.75);
-  border-radius: 20px;
-  padding: 28px;
-  box-shadow: 0 8px 32px rgba(160,130,200,0.13);
-  margin-top: 24px;
-  max-width: 700px;
-  margin-left: auto;
-  margin-right: auto;
-">
-  <!-- TIÊU ĐỀ -->
-  <div style="text-align:center; margin-bottom:22px;">
-    <div style="font-size:28px; margin-bottom:6px;">🔄</div>
-    <div style="font-size:16px; font-weight:700; color:#3b3551;">Chuyển đổi đơn hàng</div>
-    <div style="font-size:12px; color:#9b8bb4; margin-top:4px;">Chuyển đơn sang gian hàng mới và tự động huỷ đơn cũ</div>
-  </div>
 
-  <!-- 2 CỘT -->
-  <div style="display:grid; grid-template-columns:1fr 1fr; gap:20px; align-items:start;">
-
-    <!-- CỘT TRÁI: GIAN HÀNG PHÁT SINH ĐƠN HÀNG -->
-    <div style="
-      background: rgba(216,180,254,0.12);
-      border: 1.5px solid rgba(198,181,255,0.45);
-      border-radius: 14px;
-      padding: 18px 16px;
-    ">
-      <div style="font-size:10px; font-weight:700; color:#7c6fa0; letter-spacing:.6px;
-                  text-transform:uppercase; margin-bottom:14px; display:flex; align-items:center; gap:6px;">
-        <span style="font-size:14px;">📤</span> Gian hàng phát sinh đơn hàng
-      </div>
-
-      <label style="font-size:11px; font-weight:700; color:#9b8bb4; letter-spacing:.4px; text-transform:uppercase;">Mã đơn hàng đã có</label>
-      <input id="transferOrderCode" type="text" placeholder="VD: R8547883114"
-        style="width:100%; box-sizing:border-box; margin:6px 0 12px; padding:10px 13px;
-               border:1.5px solid rgba(198,181,255,.5); border-radius:10px; font-size:13px;
-               font-family:monospace; letter-spacing:.8px; background:rgba(255,255,255,.65);
-               color:#3b3551; outline:none; transition:border .2s;"
-        onfocus="this.style.borderColor='#a78bfa'; this.style.boxShadow='0 0 0 3px rgba(167,139,250,.15)'"
-        onblur="this.style.borderColor='rgba(198,181,255,.5)'; this.style.boxShadow='none'" />
-
-      <label style="font-size:11px; font-weight:700; color:#9b8bb4; letter-spacing:.4px; text-transform:uppercase;">Mã sản phẩm của đơn hàng</label>
-      <input id="transferProductCode" type="text" placeholder="VD: SP001234"
-        style="width:100%; box-sizing:border-box; margin:6px 0 12px; padding:10px 13px;
-               border:1.5px solid rgba(198,181,255,.5); border-radius:10px; font-size:13px;
-               font-family:monospace; letter-spacing:.8px; background:rgba(255,255,255,.65);
-               color:#3b3551; outline:none; transition:border .2s;"
-        onfocus="this.style.borderColor='#a78bfa'; this.style.boxShadow='0 0 0 3px rgba(167,139,250,.15)'"
-        onblur="this.style.borderColor='rgba(198,181,255,.5)'; this.style.boxShadow='none'" />
-
-      <label style="font-size:11px; font-weight:700; color:#9b8bb4; letter-spacing:.4px; text-transform:uppercase;">Key chuyển đơn hàng</label>
-      <input id="transferKey" type="text" placeholder="VD: TRANSFER-KEY-XXXXXXXX"
-        style="width:100%; box-sizing:border-box; margin:6px 0 18px; padding:10px 13px;
-               border:1.5px solid rgba(198,181,255,.5); border-radius:10px; font-size:13px;
-               font-family:monospace; letter-spacing:.8px; background:rgba(255,255,255,.65);
-               color:#3b3551; outline:none; transition:border .2s;"
-        onfocus="this.style.borderColor='#a78bfa'; this.style.boxShadow='0 0 0 3px rgba(167,139,250,.15)'"
-        onblur="this.style.borderColor='rgba(198,181,255,.5)'; this.style.boxShadow='none'" />
-
-      <!-- BUTTON CHUYỂN ĐƠN -->
-      <button onclick="openTransferConfirm()"
-        style="width:100%; padding:12px; border:none; border-radius:12px;
-               background:linear-gradient(135deg,#c8b4fa,#a78bfa); color:#fff;
-               font-family:inherit; font-size:14px; font-weight:700; cursor:pointer;
-               box-shadow:0 4px 16px rgba(167,139,250,.4); transition:all .2s;"
-        onmouseover="this.style.transform='translateY(-1px)'; this.style.boxShadow='0 8px 24px rgba(167,139,250,.5)'"
-        onmouseout="this.style.transform=''; this.style.boxShadow='0 4px 16px rgba(167,139,250,.4)'">
-        🔄 Chuyển đơn hàng
-      </button>
-    </div>
-
-    <!-- CỘT PHẢI: GIAN HÀNG NHẬN ĐƠN MỚI -->
-    <div style="
-      background: rgba(167,243,208,0.12);
-      border: 1.5px solid rgba(110,231,183,0.35);
-      border-radius: 14px;
-      padding: 18px 16px;
-    ">
-      <div style="font-size:10px; font-weight:700; color:#059669; letter-spacing:.6px;
-                  text-transform:uppercase; margin-bottom:14px; display:flex; align-items:center; gap:6px;">
-        <span style="font-size:14px;">📥</span> Gian hàng nhận đơn hàng mới
-      </div>
-
-      <label style="font-size:11px; font-weight:700; color:#9b8bb4; letter-spacing:.4px; text-transform:uppercase;">Link gian hàng nhận đơn</label>
-      <input id="transferShopUrl" type="text" placeholder="VD: https://chiaki.vn/gian-hang-stXXXX"
-        style="width:100%; box-sizing:border-box; margin:6px 0 12px; padding:10px 13px;
-               border:1.5px solid rgba(110,231,183,.4); border-radius:10px; font-size:12px;
-               background:rgba(255,255,255,.65); color:#3b3551; outline:none; transition:border .2s;"
-        onfocus="this.style.borderColor='#10b981'; this.style.boxShadow='0 0 0 3px rgba(16,185,129,.12)'"
-        onblur="this.style.borderColor='rgba(110,231,183,.4)'; this.style.boxShadow='none'" />
-
-      <!-- Ghi chú thông tin -->
-      <div style="background:rgba(167,243,208,.2); border:1px solid rgba(110,231,183,.35);
-                  border-radius:10px; padding:12px 14px; margin-top:8px; font-size:11px;
-                  color:#065f46; line-height:1.7;">
-        <div style="font-weight:700; margin-bottom:6px; font-size:11px; color:#047857;">
-          📌 Lưu ý khi chuyển đơn:
-        </div>
-        <div>• Đơn cũ sẽ bị <b>huỷ tự động</b> sau khi chuyển</div>
-        <div>• Mã đơn mới sẽ được tạo tại gian hàng nhận</div>
-        <div>• Giá sản phẩm theo mã SP của gian hàng mới</div>
-        <div>• Thao tác <b>không thể hoàn tác</b> sau khi xác nhận</div>
-      </div>
-    </div>
-
-  </div><!-- end grid -->
-</div>
-<!-- ── END BẢNG CHUYỂN ĐỔI ── -->
-
-
-<!-- ── POPUP XÁC NHẬN CHUYỂN ĐƠN ── -->
-<div id="transferConfirmBg" style="display:none; position:fixed; inset:0;
-     background:rgba(60,40,90,0.45); backdrop-filter:blur(10px);
-     z-index:9999; align-items:center; justify-content:center; padding:16px;">
-  <div style="background:rgba(255,255,255,.88); backdrop-filter:blur(30px);
-              border:1px solid rgba(255,255,255,.9); border-radius:22px;
-              padding:30px 28px; max-width:420px; width:100%;
-              box-shadow:0 24px 60px rgba(160,130,200,.3); position:relative;
-              text-align:center;">
-
-    <!-- Icon cảnh báo -->
-    <div style="font-size:44px; margin-bottom:10px;">⚠️</div>
-    <div style="font-size:16px; font-weight:700; color:#3b3551; margin-bottom:6px;">
-      Xác nhận chuyển đơn hàng
-    </div>
-    <div style="font-size:12px; color:#9b8bb4; margin-bottom:20px;">
-      Vui lòng đọc kỹ trước khi xác nhận
-    </div>
-
-    <!-- Nội dung cảnh báo -->
-    <div style="background:rgba(254,243,199,.6); border:1.5px solid rgba(252,211,77,.5);
-                border-radius:14px; padding:16px 18px; margin-bottom:22px;
-                text-align:left; font-size:12px; color:#78350f; line-height:1.9;">
-      <div style="font-weight:800; font-size:12px; color:#92400e; letter-spacing:.3px; margin-bottom:8px;">
-        📋 THÔNG TIN QUAN TRỌNG
-      </div>
-      <div>🔢 Đơn hàng sẽ có <b>mã đơn mới</b> tại gian hàng mới</div>
-      <div>🚫 Đơn cũ sẽ bị <b>huỷ</b> với lý do: <i>Khách hàng yêu cầu huỷ đơn</i></div>
-      <div>💰 Giá sản phẩm sẽ <b>thay đổi</b> theo mã sản phẩm mới của gian hàng nhận đơn</div>
-      <div style="margin-top:8px; font-weight:700; color:#b45309;">
-        ✅ Xác nhận đã điền đúng thông tin
-      </div>
-    </div>
-
-    <!-- Buttons -->
-    <div style="display:flex; gap:10px;">
-      <button onclick="closeTransferConfirm()"
-        style="flex:1; padding:12px; border:1.5px solid rgba(198,181,255,.4);
-               border-radius:12px; background:rgba(255,255,255,.5); color:#7c6fa0;
-               font-family:inherit; font-size:13px; font-weight:600; cursor:pointer; transition:all .2s;"
-        onmouseover="this.style.background='rgba(255,255,255,.8)'"
-        onmouseout="this.style.background='rgba(255,255,255,.5)'">
-        Huỷ bỏ
-      </button>
-      <button onclick="submitTransferOrder()"
-        style="flex:2; padding:12px; border:none; border-radius:12px;
-               background:linear-gradient(135deg,#f59e0b,#d97706); color:#fff;
-               font-family:inherit; font-size:13px; font-weight:700; cursor:pointer;
-               box-shadow:0 4px 14px rgba(245,158,11,.35); transition:all .2s;"
-        onmouseover="this.style.transform='translateY(-1px)'"
-        onmouseout="this.style.transform=''">
-        ✅ Xác nhận chuyển
-      </button>
-    </div>
-  </div>
-</div>
-
-
-<!-- ── POPUP KẾT QUẢ: ĐANG PHÁT TRIỂN ── -->
-<div id="transferDevBg" style="display:none; position:fixed; inset:0;
-     background:rgba(60,40,90,0.45); backdrop-filter:blur(10px);
-     z-index:10000; align-items:center; justify-content:center; padding:16px;">
-  <div style="background:rgba(255,255,255,.88); backdrop-filter:blur(30px);
-              border:1px solid rgba(255,255,255,.9); border-radius:22px;
-              padding:30px 28px; max-width:380px; width:100%;
-              box-shadow:0 24px 60px rgba(160,130,200,.3); text-align:center;">
-    <div style="font-size:48px; margin-bottom:12px;">🚧</div>
-    <div style="font-size:16px; font-weight:700; color:#3b3551; margin-bottom:8px;">
-      Tính năng đang phát triển
-    </div>
-    <div style="font-size:13px; color:#9b8bb4; line-height:1.7; margin-bottom:22px;">
-      Tính năng <b>chuyển đơn hàng</b> hiện đang được phát triển.<br>
-      Vui lòng đợi trong thời gian tới! 🙏
-    </div>
-    <button onclick="closeTransferDev()"
-      style="width:100%; padding:12px; border:none; border-radius:12px;
-             background:linear-gradient(135deg,#c8b4fa,#a78bfa); color:#fff;
-             font-family:inherit; font-size:14px; font-weight:700; cursor:pointer;
-             box-shadow:0 4px 14px rgba(167,139,250,.4); transition:all .2s;"
-      onmouseover="this.style.transform='translateY(-1px)'"
-      onmouseout="this.style.transform=''">
-      Đã hiểu
-    </button>
-  </div>
-</div>
-
-
-<script>
-// ── TRANSFER ORDER LOGIC ────────────────────────────────────
+/* ── CHUYỂN ĐƠN ── */
 function openTransferConfirm() {
-  const orderCode = document.getElementById('transferOrderCode').value.trim();
+  const orderCode   = document.getElementById('transferOrderCode').value.trim();
   const productCode = document.getElementById('transferProductCode').value.trim();
-  const key = document.getElementById('transferKey').value.trim();
-  const shopUrl = document.getElementById('transferShopUrl').value.trim();
+  const key         = document.getElementById('transferKey').value.trim();
+  const shopUrl     = document.getElementById('transferShopUrl').value.trim();
 
-  if (!orderCode) {
-    alert('⚠️ Vui lòng nhập mã đơn hàng.');
-    document.getElementById('transferOrderCode').focus();
-    return;
-  }
-  if (!productCode) {
-    alert('⚠️ Vui lòng nhập mã sản phẩm.');
-    document.getElementById('transferProductCode').focus();
-    return;
-  }
-  if (!key) {
-    alert('⚠️ Vui lòng nhập Key chuyển đơn.');
-    document.getElementById('transferKey').focus();
-    return;
-  }
-  if (!shopUrl) {
-    alert('⚠️ Vui lòng nhập link gian hàng nhận đơn.');
-    document.getElementById('transferShopUrl').focus();
-    return;
-  }
+  if (!orderCode)   { alert('⚠️ Vui lòng nhập mã đơn hàng.');          document.getElementById('transferOrderCode').focus();   return; }
+  if (!productCode) { alert('⚠️ Vui lòng nhập mã sản phẩm.');           document.getElementById('transferProductCode').focus(); return; }
+  if (!key)         { alert('⚠️ Vui lòng nhập Key chuyển đơn.');         document.getElementById('transferKey').focus();         return; }
+  if (!shopUrl)     { alert('⚠️ Vui lòng nhập link gian hàng nhận đơn.'); document.getElementById('transferShopUrl').focus();    return; }
 
-  // Hiện popup xác nhận
-  document.getElementById('transferConfirmBg').style.display = 'flex';
+  document.getElementById('transferConfirmBg').classList.add('show');
 }
 
 function closeTransferConfirm() {
-  document.getElementById('transferConfirmBg').style.display = 'none';
+  document.getElementById('transferConfirmBg').classList.remove('show');
 }
 
 function submitTransferOrder() {
-  // Đóng popup xác nhận → mở popup đang phát triển
-  document.getElementById('transferConfirmBg').style.display = 'none';
-  document.getElementById('transferDevBg').style.display = 'flex';
+  document.getElementById('transferConfirmBg').classList.remove('show');
+  document.getElementById('transferDevBg').classList.add('show');
 }
 
 function closeTransferDev() {
-  document.getElementById('transferDevBg').style.display = 'none';
+  document.getElementById('transferDevBg').classList.remove('show');
 }
 
-// Đóng popup khi click nền
+/* Đóng modal khi click nền */
 document.getElementById('transferConfirmBg').addEventListener('click', function(e) {
   if (e.target === this) closeTransferConfirm();
 });
 document.getElementById('transferDevBg').addEventListener('click', function(e) {
   if (e.target === this) closeTransferDev();
 });
+
+/* Restore key đã lưu */
+window.addEventListener('DOMContentLoaded', () => {
+  const saved = localStorage.getItem('lastPhoneKey');
+  if (saved) document.getElementById('inpKey').value = saved;
+});
 </script>
 
-</script>
 </body>
 </html>
