@@ -20,8 +20,7 @@ async def proxy_order_info(body: dict):
     async with httpx.AsyncClient(timeout=20) as client:
         res = await client.post(
             f"{MAIN_SERVER}/api/order-info",
-            json=body
-        )
+            json=body)
         return res.json()
 
 # Proxy check-key
@@ -30,8 +29,7 @@ async def proxy_check_key(body: dict):
     async with httpx.AsyncClient(timeout=10) as client:
         res = await client.post(
             f"{MAIN_SERVER}/api/order-info/check-key",
-            json=body
-        )
+            json=body)
         return res.json()
 @app.post("/api/order/cancel")
 async def proxy_cancel_order(body: dict):
