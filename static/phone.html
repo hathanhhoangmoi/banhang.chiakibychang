@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>Bán hàng cùng Chang</title>
+<title>Bán hàng cùng bạn Chang</title>
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
 *{box-sizing:border-box;margin:0;padding:0}
@@ -517,7 +517,7 @@ body{
 
     <div class="notice notice-phone">
       <div class="notice-title">⚠️ THÔNG BÁO MIỄN TRỪ TRÁCH NHIỆM</div>
-      Công cụ này được xây dựng và cung cấp dựa trên các nguồn dữ liệu và mã nguồn mở công khai từ Chiaki.vn.<br/><br/>
+      Công cụ này được xây dựng và cung cấp dựa trên các nguồn dữ liệu và mã nguồn mở công khai.<br/><br/>
       Chúng tôi không sở hữu cũng như không chịu trách nhiệm về nội dung gốc.<br/><br/>
       Nghiêm cấm mọi hành vi sử dụng dữ liệu cho các mục đích gian lận, trái phép hoặc vi phạm quyền riêng tư.<br/><br/>
       Mọi hoạt động đều có thể được ghi nhận và lưu lại. Trong trường hợp phát hiện vi phạm, chúng tôi có quyền cung cấp thông tin cho cơ quan chức năng.<br/><br/>
@@ -540,7 +540,7 @@ body{
     </div>
 
     <button class="btn btn-pink" id="btnSearch" onclick="doSearch()">
-      🔍&nbsp; NHẬN THÔNG TIN ĐƠN HÀNG
+      🔍&nbsp; TRA CỨU
     </button>
 
     <div class="error" id="errBox"></div>
@@ -920,7 +920,7 @@ function copyPhone() {
 
 /* ── HUỶ ĐƠN ── */
 async function doCancel() {
-  const code = document.getElementById('cancel_Code').value.trim();
+  const code = document.getElementById('cancelCode').value.trim();
   const key  = document.getElementById('cancel_Key').value.trim();
   const box  = document.getElementById('cancelMsg');
   const btn  = document.getElementById('btnCancel');
@@ -1073,7 +1073,6 @@ function placeOrder() {
   document.getElementById('qrWrap').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
 }
 
-// ✅ SỬA: Thêm popup xác nhận trước khi hiện cảm ơn
 function confirmPaid() {
   document.getElementById('confirmPayBg').style.display = 'flex';
 }
