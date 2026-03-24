@@ -470,6 +470,37 @@ body{
   border: 1px solid rgba(248, 113, 113, .4);
   color: #991b1b;
 }
+  /* ── CHỜ PHÁT TRIỀN TÍNH NĂNG CHUYỂN ĐƠN ── */
+.transfer-overlay {
+  position: absolute;
+  inset: 0;
+  border-radius: 22px;
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  background: rgba(237, 232, 255, 0.55);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10;
+}
+.transfer-overlay-box {
+  text-align: center;
+  padding: 28px 32px;
+  background: rgba(255,255,255,.75);
+  border-radius: 18px;
+  border: 1px solid rgba(167,139,250,.4);
+  box-shadow: 0 8px 32px rgba(160,130,200,.2);
+  max-width: 320px;
+}
+.transfer-overlay-icon { font-size: 48px; margin-bottom: 12px; }
+.transfer-overlay-title {
+  font-size: 15px; font-weight: 800; color: #5b21b6;
+  line-height: 1.5; margin-bottom: 8px;
+}
+.transfer-overlay-sub {
+  font-size: 12px; color: #9b8bb4; line-height: 1.7;
+}
+
 </style>
 </head>
 <body>
@@ -624,7 +655,18 @@ body{
     </div>
   </div>
   <!-- ── CARD 3: CHUYỂN ĐỔI ĐƠN HÀNG ── -->
-  <div class="card card-full">
+  <div class="card card-full" style="position:relative;">
+        <!-- CHỜ PHÁT TRIỂN TÍNH NĂNG CHUYỂN ĐƠN -->
+    <div class="transfer-overlay">
+      <div class="transfer-overlay-box">
+        <div class="transfer-overlay-icon">🚧</div>
+        <div class="transfer-overlay-title">
+          Tính năng CHUYỂN ĐƠN HÀNG<br/>hiện đang được phát triển.
+        </div>
+        <div class="transfer-overlay-sub">Vui lòng đợi trong thời gian tới! 🙏</div>
+      </div>
+    </div>
+
     <div class="logo transfer" style="animation-name:pulseV;">🔄</div>
     <div class="title">Chuyển đổi đơn hàng</div>
     <div class="sub">Chuyển đơn sang gian hàng mới và tự động huỷ đơn cũ</div>
