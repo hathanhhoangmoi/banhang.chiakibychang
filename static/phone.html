@@ -55,7 +55,6 @@ body{
   animation:pulse 2s infinite;
 }
 .logo.phone{background:linear-gradient(135deg,#f9a8d4,#ec4899);}
-.logo.cancel{background:linear-gradient(135deg,#fecaca,#f97373);}
 .logo.transfer{background:linear-gradient(135deg,#c8b4fa,#a78bfa); animation:pulseV 2s infinite;}
 @keyframes pulse{
   0%,100%{box-shadow:0 4px 16px rgba(236,72,153,.35)}
@@ -83,11 +82,6 @@ body{
   background:rgba(255,200,100,.18);
   border:1px solid rgba(255,180,60,.35);
   color:#92400e;
-}
-.notice-cancel{
-  background:rgba(254,202,202,.22);
-  border:1px solid rgba(248,113,113,.45);
-  color:#991b1b;
 }
 
 .field{margin-bottom:12px}
@@ -259,19 +253,6 @@ body{
   text-align:center;
 }
 .modal-btn-row{display:flex;gap:10px;margin-top:4px;}
-.btn-modal-cancel{
-  flex:1;padding:12px;
-  border:1.5px solid rgba(198,181,255,.4);
-  border-radius:12px;background:rgba(255,255,255,.5);color:#7c6fa0;
-  font-family:inherit;font-size:13px;font-weight:600;cursor:pointer;transition:all .2s;
-}
-.btn-modal-cancel:hover{background:rgba(255,255,255,.8)}
-.btn-modal-confirm{
-  flex:2;padding:12px;border:none;border-radius:12px;
-  background:linear-gradient(135deg,#f59e0b,#d97706);color:#fff;
-  font-family:inherit;font-size:13px;font-weight:700;cursor:pointer;
-  box-shadow:0 4px 14px rgba(245,158,11,.35);transition:all .2s;
-}
 .btn-modal-confirm:hover{transform:translateY(-1px)}
 
 /* ── KEY SHOP PANEL ── */
@@ -567,42 +548,6 @@ body{
 
       <div style="text-align:center" id="remainingWrap"></div>
     </div>
-  </div>
-
-  <!-- ── CARD 2: HUỶ ĐƠN HÀNG ── -->
-  <div class="card">
-    <div class="logo cancel">❌</div>
-    <div class="title">Hủy đơn hàng</div>
-    <div class="sub">Nhập MÃ ĐƠN HÀNG và CANCEL KEY để gửi yêu cầu hủy</div>
-
-    <div class="notice notice-cancel">
-      <div class="notice-title">⚠️ QUY ĐỊNH HUỶ ĐƠN</div>
-      Chức năng này sẽ tự động huỷ đơn theo phương thức <b>"ℹ️ Khách hàng yêu cầu huỷ đơn"</b>.<br/><br/>
-      Gian hàng không bị tính phí sau khi đơn hàng được huỷ theo phương thức này.<br/><br/>
-      <span class="notice-title" style="display:block;margin-top:4px">📌 YÊU CẦU ĐỐI VỚI ĐƠN HÀNG CẦN HUỶ</span>
-      *Đơn hàng <b>CHƯA TẠO MÃ VẬN ĐƠN</b>.<br/>
-      *Đã thông báo và trao đổi với khách hàng về thông tin đơn hàng sẽ bị huỷ.
-    </div>
-
-    <div class="field">
-      <label class="label">MÃ ĐƠN HÀNG CẦN HỦY</label>
-      <input class="inp inp-mono" id="order_order" type="text"
-             placeholder="VD: R1234567890"
-             onkeydown="if(event.key==='Enter')doCancel()"/>
-    </div>
-
-    <div class="field">
-      <label class="label">CANCEL KEY</label>
-      <input class="inp inp-mono" id="cancel_key" type="text"
-             placeholder="CANCEL-KEY-****-*****"
-             onkeydown="if(event.key==='Enter')doCancel()"/>
-    </div>
-
-    <button class="btn btn-red" id="btnCancel" onclick="doCancel()">
-      🚫&nbsp; GỬI YÊU CẦU HUỶ ĐƠN
-    </button>
-
-    <div id="cancelMsg" style="margin-top:14px;"></div>
   </div>
 
   <!-- ── CARD 3: CHUYỂN ĐỔI ĐƠN HÀNG (full width) ── -->
@@ -916,65 +861,6 @@ function copyPhone() {
     document.body.removeChild(el);
     done();
   });
-}
-
-/* ── HUỶ ĐƠN ── */
-async function doCancel() {
-  const code = document.getElementById('order_code').value.trim();
-  const key  = document.getElementById('cancel_key').value.trim();
-  const box  = document.getElementById('cancelMsg');
-  const btn  = document.getElementById('btnCancel');
-
-  box.innerHTML = '';
-
-  if (!code || !key) {
-    box.innerHTML = `
-      <div style="font-size:12px;padding:10px 12px;border-radius:10px;
-                  border:1px solid rgba(248,113,113,.3);background:rgba(254,202,202,.4);
-                  color:#991b1b;line-height:1.5;">
-        Vui lòng nhập đầy đủ <b>Mã đơn</b> và <b>CANCEL KEY</b>.
-      </div>`;
-    return;
-  }
-
-  btn.disabled = true;
-  btn.innerHTML = '⏳&nbsp; Đang xử lý...';
-
-  try {
-    const res = await fetch('/api/order/cancel', {
-      method: 'POST',
-      headers: {'Content-Type': 'application/json'},
-      body: JSON.stringify({order_code: code, cancel_key: key})
-    });
-    const data = await res.json();
-
-    if (data.ok) {
-      box.innerHTML = `
-        <div style="font-size:12px;padding:12px 14px;border-radius:10px;
-                    border:1px solid rgba(110,231,183,.4);background:rgba(167,243,208,.3);
-                    color:#065f46;line-height:1.7;">
-          <div style="font-weight:700;font-size:13px;margin-bottom:4px;">✅ ${data.message}</div>
-          <div style="color:#9b8bb4;">Lượt còn lại: <b>${data.remaining}</b>/10</div>
-        </div>`;
-    } else {
-      box.innerHTML = `
-        <div style="font-size:12px;padding:10px 12px;border-radius:10px;
-                    border:1px solid rgba(248,113,113,.3);background:rgba(254,202,202,.4);
-                    color:#991b1b;line-height:1.6;">
-          ❌ ${data.error || 'Có lỗi xảy ra. Vui lòng thử lại.'}
-        </div>`;
-    }
-  } catch(e) {
-    box.innerHTML = `
-      <div style="font-size:12px;padding:10px 12px;border-radius:10px;
-                  border:1px solid rgba(248,113,113,.3);background:rgba(254,202,202,.4);
-                  color:#991b1b;">
-        ❌ Lỗi kết nối: ${e.message}
-      </div>`;
-  } finally {
-    btn.disabled = false;
-    btn.innerHTML = '🚫&nbsp; Gửi yêu cầu hủy đơn';
-  }
 }
 
 /* ── CHUYỂN ĐƠN ── */
